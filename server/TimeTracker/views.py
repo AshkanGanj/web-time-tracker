@@ -16,6 +16,7 @@ from insctructions.dataFunc import DataInstruct
 
 @login_required(login_url='login')
 def index(request):
+    
     q = Sites.objects
     sites = q.filter(user_id=request.user.id).order_by('time').all()
     aggrDaily = Aggregators(request.user.id)

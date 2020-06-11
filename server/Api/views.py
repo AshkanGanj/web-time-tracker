@@ -18,6 +18,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from TimeTracker.models import Sites, UserProfile
 from insctructions.dataFunc import DataInstruct
+from insctructions.aggregator import Aggregators
 
 import time
 import math
@@ -57,7 +58,7 @@ def UpdateAvtive(request):
 
 @login_required(login_url='login')
 def get_data(request):
-
+    weekDay = {}
     label = []
     data = []
     minute = []
@@ -74,8 +75,8 @@ def get_data(request):
 
     for item in data:
         percentage.append(dataInsctance.get_percentage(item, data))
-    
     data = {
+        "daily":dataInsctance.get_week_days_data(),
         "label": label,
         "data": data,
         "min": minute,

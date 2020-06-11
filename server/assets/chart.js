@@ -3,23 +3,42 @@
   Github:https://github.com/Ashkan-agc
 */
 
-var endpoint = "/api/ChartData";
+const endpoint = "/api/ChartData";
+
 var cdata;
+
+function getList(array) {
+  const week = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wendesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+  var days = [];
+  var avg = [];
+  var data = [];
+
+  for (let index = 0; index < array.length; index++) {
+    days.push(week[array[index]["weekday"]]);
+    avg.push((array[index]["avg"]).toFixed(2));
+  }
+  data.push(days, avg);
+  return data;
+}
+
 function getSeccond(str) {
-  var a = str.split(':');
-  var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+  var a = str.split(":");
+  var seconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
   return seconds;
 }
-const max = getSeccond($("#max").text());
-const min = getSeccond($("#min").text());
-const sum = getSeccond($("#sum").text());
-const dailyData = [parseInt(max),parseInt(min), parseInt(sum)];
-console.log(dailyData);
-
 $.ajax({
   method: "GET",
   url: endpoint,
   success: function (data) {
+    area(data);
     bar(data);
     circle(data);
   },
@@ -68,7 +87,7 @@ function circle(data) {
       },
     },
   });
-}
+};
 
 function bar(data) {
   var ctx = document.getElementById("barchart").getContext("2d");
@@ -93,35 +112,41 @@ function bar(data) {
         text: "visted sites time in second",
       },
       scales: {
-        xAxes: [{
-          ticks: {
-            min: 0
-          } 
-        }],
-        yAxes: [{
-        }],
-      }
+        xAxes: [
+          {
+            ticks: {
+              min: 0,
+            },
+          },
+        ],
+        yAxes: [{}],
+      },
     },
   });
-}
+};
 
-var ctx = document.getElementById('areachart').getContext('2d');
-var chart = new Chart(ctx, {
-    type: 'line',
+function area(data) {
+  const x = getList(data["daily"]);
+  var ctx = document.getElementById("areachart").getContext("2d");
+  var chart = new Chart(ctx, {
+    type: "line",
 
     data: {
-        labels: ['saturday', 'sunday', 'monday', 'tuesday', 'wendesday', 'thursday', 'friday'],
-        datasets: [{
-          label: "  My Second dataset",   
+      labels: x[0],
+      datasets: [
+        {
+          label: "Avrage",
           fillColor: "rgb(215,236,251,0.2)",
           strokeColor: "rgba(151,187,205,1)",
           pointColor: "rgba(151,187,205,1)",
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(151,187,205,1)",
-          data: dailyData
-        }]
+          data: x[1],
+        },
+      ],
     },
 
-    options: {}
-});
+    options: {},
+  });
+};

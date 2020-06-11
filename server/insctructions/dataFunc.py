@@ -1,8 +1,8 @@
 from TimeTracker.models import Sites
-
+from django.db.models.functions import ExtractWeekDay
+from django.db.models import Avg
 import datetime
-
-
+import json
 class DataInstruct():
 
     def get_minute(self, seconds):
@@ -38,6 +38,11 @@ class DataInstruct():
         except Exception as identifier:
             pass
 
+    def get_week_days_data(self):
+        data = Sites.objects.annotate(weekday=ExtractWeekDay('date')).values('weekday').annotate(avg=Avg('time')).values('weekday', 'avg')
+        data = json.dumps(list(data))
+        data  = json.loads(data)
+        return data
 
     def CalculateTimeInstructions(self, mainUrl, userId, Time):
         userSites = Sites.objects.filter(user_id=userId).all()

@@ -4,6 +4,8 @@ from datetime import datetime
 from .dataFunc import DataInstruct
 
 
+
+
 class Aggregators():
 
     def __init__(self, user_id):
@@ -21,22 +23,23 @@ class Aggregators():
 
         data = {
             "url": m,
-            "agg":time.convert_to_time(query['time__{}'.format(agg)])
+            "agg": time.convert_to_time(query['time__{}'.format(agg)])
         }
         return data
 
     def max(self):
         q = self.userSites.aggregate(Max('time'))
-        return self.get_data(q,'max')
+        return self.get_data(q, 'max')
 
     def min(self):
         q = self.userSites.aggregate(Min('time'))
-        return self.get_data(q,'min')
+        return self.get_data(q, 'min')
 
     def average(self):
         q = self.userSites.aggregate(Avg('time'))
-        return self.get_data(q,'avg')
+        return self.get_data(q, 'avg')
 
     def sum(self):
         q = self.userSites.aggregate(Sum('time'))
-        return self.get_data(q,'sum')
+        return self.get_data(q, 'sum')
+
