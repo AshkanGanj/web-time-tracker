@@ -1,0 +1,67 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./packages/jquery-3.5.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="packages/bootstrap-4.4.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div style="width: 300px;" class="container p-3">
+      <div class="logged">
+        <img
+          style="display: inline-block;"
+          src="icons/correct (2).png"
+          alt=""
+        />
+        <p
+          style="color: green; display: inline-block;"
+          id="success"
+          class=""
+        ></p>
+        <button id="dashboard" class="btn btn-info btn-block">Dashboard</button>
+        <br />
+        <button id="logout" style="width: 100%;" class="btn btn-danger">Logout</button>
+      </div>
+      <div class="login">
+        <form class="ajax" method="POST">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+            />
+          </div>
+          <input
+            style="width: 100%;"
+            type="submit"
+            class="btn btn-info"
+            value="login"
+          />
+        </form>
+        <p id="error" style="color: red;"></p>
+        <a
+          style="width: 100%;"
+          href="http://localhost:8000/api/signUp/"
+          class="btn btn-danger"
+          >You don't join yet!!</a
+        >
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{% load static %}
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'main.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css' %}"
+    />
+    <title>Web Tracker</title>
+    <link rel="icon" href="{% static 'images/16.png'%}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    {% endblock %}
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light  bg-info">
+      <div class="container  "> 
+        <a class="navbar-brand" href="https://github.com/ashkan-agc">Web Time Tracker</a>
+        <div class="justify-content-end">
+          <a class=" navbar-item" href="{% url 'home' %}">{{ request.user.name }}</a>
+          <a class=" navbar-item" href="{% url 'logout' %}">Logout</a>
+        </div>       
+      </div>
+    </nav>
+    <div class="container bg-white">
+      <h1 class="display-3 py-4 mx-5">
+        <img src="{% static 'images/64.png' %}" alt="" /> User Dashboard 
+      </h1>
+      <hr />
+      <div class="content m-2 py-5">
+        {% block content %}{% endblock %}
+      </div>
+      <br>
+    </div>
+    <footer id="footer">
+      <div class="container text-center">
+          <h6 style="font-weight: bold; color:rgb(61, 128, 253)" class="text_color">©
+              <a href="https://github.com/ashkan-agc"> Ashkan Ganj {% now "Y" %}</a></h6>
+      </div>
+  </footer>
+    <script src="{% static 'jquery/jquery-3.5.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.4.1/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'search.js' %}"></script>
+    <script src="{% static 'chart.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+  </body>
+</html>
+

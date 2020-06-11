@@ -1,0 +1,67 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport"content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css'%}">
+    <link rel="icon" href="{% static 'images/16.png'%}" />
+    <link rel="stylesheet" href="{% static 'logcreat.css' %}">   
+    <title>Login</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<h3 id="form-title">LOGIN</h3>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form method="POST" action="">
+            {% csrf_token %}
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-envelope-square"></i
+                  ></i></span>
+							</div>
+							<input type="text" name="email" placeholder="Username..." class="form-control">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+								<input type="password" name="password" placeholder="Password..." class="form-control" >
+						</div>
+
+							<div class="d-flex justify-content-center mt-3 login_container">
+				 				<input class="btn login_btn" type="submit" value="Login">
+				   			</div>
+					</form>
+
+				</div>
+        {% for message in messages %}
+          <p id="messages">{{message}}</p>
+        {% endfor %}
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Don't have an account? <a href="{% url 'signup' %}" class="ml-2">Sign Up</a>
+					</div>
+				</div>
+			</div>
+		</div>
+  	</div>
+  <footer id="footer">
+    <div class="container text-center">
+      <h6 class="text_color">© <a href="https://github.com/Ashkan-Agc/">Ashkan Ganj</a> {% now "Y" %}</h6>
+    </div>
+  </footer>   
+</body>
+
+</html> 

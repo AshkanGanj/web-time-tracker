@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/*
+tester.py
+site.db
+.idea
+__pycache__
+db.sqlite3
