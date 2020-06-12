@@ -2,7 +2,8 @@
   developed by Ashkan Ganj
   Github:https://github.com/Ashkan-agc
 */
-var mtimer, sec, start, tabUrl, x;
+var mtimer, sec, start,active;
+var tabUrlsUpdate = {};
 const serverUrl = "http://localhost:8000/api/update/";
 
 function Timmer(start) {
@@ -27,23 +28,31 @@ function send(severUrl, tabUrl, time) {
   );
 }
 
+function newTimer() {
+  clearInterval(mtimer);
+  start = new Date().getTime() / 1000;
+  Timmer(start);
+}
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (
-    changeInfo.status == "complete" &&
-    tab.status == "complete" &&
-    tab.url != undefined
-  ) {
-    var lastUrl = x;
-    if (tab.url) {
-      x = tab.url;
-    }
-    clearInterval(mtimer);
-    
-    if (lastUrl) {
+  if (changeInfo.status == "complete" && tab.status == "complete" && tab.url != undefined)
+  {
+    active = tab.url;
+    var lastUrl;
+    if (tabUrlsUpdate[tabId]) {
+      lastUrl = tabUrlsUpdate[tabId];
+      console.log(lastUrl);
+      console.log(sec); 
       send(serverUrl, lastUrl, sec);
-    } else {
-      send(serverUrl, x, sec);
     }
+    else {
+      console.log("error");
+    }    
+    if (tab.url) {
+      tabUrlsUpdate[tabId] = tab.url;
+    }
+
+    clearInterval(mtimer);
     start = new Date().getTime() / 1000;
     Timmer(start);
   }
@@ -51,14 +60,20 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
   chrome.tabs.get(activeInfo.tabId, function (tab) {
-    start = new Date().getTime() / 1000;
-    tabUrl = tab.url;
-    Timmer(start);
+    u = tab.url;
+    console.log(u);
   });
-  if (tabUrl) {
-    send(serverUrl, tabUrl, sec);
+  if (active != "") {
+    console.log("out A " + active);
+    console.log(sec);
+    send(serverUrl, active, sec);
+    active = "";
+    newTimer();
+
   } else {
-    send(serverUrl, x, sec);
+    console.log("out U " + u);
+    console.log(sec);
+    send(serverUrl, u, sec);
+    newTimer();
   }
-  clearInterval(mtimer);
 });

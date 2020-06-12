@@ -136,13 +136,14 @@ function area(data) {
       datasets: [
         {
           label: "Avrage",
-          fillColor: "rgb(215,236,251,0.2)",
-          strokeColor: "rgba(151,187,205,1)",
-          pointColor: "rgba(151,187,205,1)",
+          data: x[1],
+          backgroundColor: "rgba(151,205,187,0.2)",
+          strokeColor: "rgba(151,205,187,1)",
+          pointColor: "rgba(151,205,187,1)",
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(151,187,205,1)",
-          data: x[1],
+          pointHighlightStroke: "rgba(151,205,187,1)",
+          
         },
       ],
     },
