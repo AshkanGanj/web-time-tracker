@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load secToTime %}
+{% block header %} Admin Dashboard {% endblock %}
+{% block dashboard-btn %} <a class="btn btn-success" href="{% url 'home' %}"> Home </a> {% endblock %}
+{% block content %}
+    <div class="mx-4 p-3 text-center">
+        <h4>In This page you can see all users visited sites with their time</h4>
+        <p style="font-size: 20px;">You can see info about each user by clicking on user name</p>
+    </div>
+
+    <div class="row mx-4">
+        <div class="col-lg-6 p-3">
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                    {% if users %}
+                        <h5 class="card-title">User List</h5>
+                        <div class="p-4">
+                            <ol style="height: 300px; overflow: auto;">
+                                {% for user in users %}
+                                    <li>
+                                        <span style="font-size: 18px; font-weight: bold">Email :</span>
+                                        <a href="{% url 'detail' pk=user.id %}">
+                                            {{ user.email }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    {% else %}
+                        <h5 class="card-title">User Info</h5>
+                        <div class="pl-5 mt-5" style="font-size: 18px; height: 300px">
+                            {% with details|first as user %}
+                                <p><span style="font-weight: bold">Email :</span>{{ user.user }}
+                                </p>
+                                <p><span style="font-weight: bold">Name :</span>{{ user.user.name }}</p>
+                                <p><span style="font-weight: bold">Last Login :</span>{{ user.user.last_login }}</p>
+                                <p><span style="font-weight: bold">Is Active :</span>
+                                    {% if user.user.is_active %}
+                                        user is active
+                                    {% else %}
+                                        user is not active
+                                    {% endif %}
+                                </p>
+                                <a href="{% url 'user_list' %}">back</a>
+                            {% endwith %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 p-3">
+            <div class="card" style="width: 100%">
+                <div class="card-body p-3">
+                    <h5 class="card-title">Sites</h5>
+                    <div class="p-4">
+                        <ol style="height: 300px; overflow: auto; font-size: 18px">
+                            {% for site in details %}
+                                <li>{{ site }} : {{ site.time|convert_to_time }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div   >
+{% endblock %}

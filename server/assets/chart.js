@@ -9,20 +9,20 @@ var cdata;
 
 function getList(array) {
   const week = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wendesday",
-    "thursday",
-    "friday",
-    "saturday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
   ];
   var days = [];
   var avg = [];
   var data = [];
 
   for (let index = 0; index < array.length; index++) {
-    days.push(week[array[index]["weekday"]]);
+    days.push(week[array[index]["weekday"]-1]);
     avg.push((array[index]["avg"]).toFixed(2));
   }
   data.push(days, avg);
@@ -38,6 +38,7 @@ $.ajax({
   method: "GET",
   url: endpoint,
   success: function (data) {
+    console.log(data);
     area(data);
     bar(data);
     circle(data);

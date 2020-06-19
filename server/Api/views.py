@@ -76,7 +76,7 @@ def get_data(request):
     for item in data:
         percentage.append(dataInsctance.get_percentage(item, data))
     data = {
-        "daily":dataInsctance.get_week_days_data(),
+        "daily": dataInsctance.get_week_days_data(request.user.id),
         "label": label,
         "data": data,
         "min": minute,

@@ -1,108 +1,189 @@
 {% extends "index.html" %}
-{% load secToTime %} 
+{% load secToTime %}
+{% block dashboard-btn %}<a class="btn btn-success" href="{% url 'user_list' %}"> Users Info </a>{% endblock %}
 {% block content %}
-<section class="mt-5">
-  <div class="card shadow-sm mx-auto" style="width: 90%;">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <h5 class="ml-5 card-title py-2 pr-3" style="display: inline-block;">
-            Sites list
-          </h5>
-        </div>
-        <div class="col">
-          <a href="{% url 'delete' %}" class="btn btn-danger clear-btn"
-            >CLEAR</a
-          >
-        </div>
-      </div>
-      <div class="mx-5 mb-4">
-        <input
-          class="form-control"
-          type="text"
-          id="search-input"
-          placeholder="Search"
-        />
-      </div>
-      <hr />
-      <ol
-        id="list"
-        class="row grid-divider"
-        data-spy="scroll"
-        data-target="#navbar-example2"
-        data-offset="0"
-      >
-        {% for site in sites %}
-        <div class="col-md-6">
-          <li class="">
-            {{ site }} :
-            <span style="color: rgb(61, 128, 253);">{{ site.time|convert_to_time }}</span>
-          </li>
-        </div>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-</section>
 
-<section class="m-5">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Circle chart</h5>
-          <canvas id="doughnut-chart"></canvas>
-        </div>
-      </div>
-    </div>
+    <section class="mt-5">
+        <div class="card shadow-sm mx-auto" style="width: 90%;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="ml-5 card-title py-2 pr-3" style="display: inline-block;">
+                            Sites list
+                        </h5>
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'delete' %}" class="btn btn-danger clear-btn"
+                        >CLEAR</a
+                        >
+                    </div>
+                </div>
+                <div class="mx-5 mb-4">
+                    <input
+                            class="form-control"
+                            type="text"
+                            id="search-input"
+                            placeholder="Search"
+                    />
+                </div>
+                <br/>
+                <div class="mx-5">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a
+                                    class="nav-link active"
+                                    id="home-tab"
+                                    data-toggle="tab"
+                                    href="#home"
+                                    role="tab"
+                                    aria-controls="home"
+                                    aria-selected="true"
+                            >Today</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                    class="nav-link"
+                                    id="profile-tab"
+                                    data-toggle="tab"
+                                    href="#profile"
+                                    role="tab"
+                                    aria-controls="profile"
+                                    aria-selected="false"
+                            >All
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div
+                                class="tab-pane fade show active"
+                                id="home"
+                                role="tabpanel"
+                                aria-labelledby="home-tab"
+                        >
+                            <ul
+                                    style="height: 300px; overflow: auto;"
+                                    id="list"
+                                    class="row grid-divider pt-4"
+                                    data-spy="scroll"
+                                    data-target="#navbar-example2"
+                                    data-offset="0"
+                            >
+                                {% for site in today %}
+                                    <div class="col-md-6">
+                                        {% if site.dailyTime %}
+                                            <li class="">
+                                                {{ site }} :
+                                                <span style="color: rgb(61, 128, 253);">
+                        {{ site.dailyTime|convert_to_time }}
+                    </span>
+                                            </li>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="profile"
+                             role="tabpanel"
+                             aria-labelledby="profile-tab"
+                        >
+                            <ul
+                                    style="height: 300px; overflow: auto;"
+                                    id="list"
+                                    class="row grid-divider pt-4"
+                                    data-spy="scroll"
+                                    data-target="#navbar-example2"
+                                    data-offset="0"
+                            >
+                                {% for site in sites %}
 
-    <div class="col-md-12 py-5">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Bar chart</h5>
-          <canvas id="barchart"></canvas>
+                                    <div class="col-md-6">
+                                        <li class="">
+                                            {{ site }} :
+                                            <span style="color: rgb(61, 128, 253);"
+                                            >{{ site.time|convert_to_time }}</span
+                                            >
+                                        </li>
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="mx-4">
-  <div class="col-md-12">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Today Info</h5>
-        <ul class="list-group p-2 mx-auto" style="width: 80%;">
-          <li  class="list-group-item d-flex justify-content-between align-items-center">
-            <span style="font-weight: bold;">Max : </span> 
-             {{max.url}}
-            <span id="max" class="badge badge-primary badge-pill">{{max.agg}}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span style="font-weight: bold;">Min :  </span> 
-          {{min.url}}
-          <span id="min" class="badge badge-primary badge-pill">{{min.agg}}</span>
-          </li>
-          <li  class="list-group-item d-flex  justify-content-between align-items-center">
-          <span style="font-weight: bold;">Sum of all time </span> 
-          <span id="sum" class="badge badge-primary badge-pill">{{sum.agg}}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<br>
-<br>
-<section class="mx-4">
-  <div class="col-md-12">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Daily chart</h5>
-        <canvas id="areachart"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
+    <section class="m-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Circle chart</h5>
+                        <canvas id="doughnut-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 py-5">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Bar chart</h5>
+                        <canvas id="barchart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mx-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Today Info</h5>
+                    <ul class="list-group p-2 mx-auto" style="width: 80%;">
+                        <li
+                                class="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                            <span style="font-weight: bold;">Max : </span>
+                            {{ max.url }}
+                            <span id="max" class="badge badge-primary badge-pill"
+                            >{{ max.agg }}</span
+                            >
+                        </li>
+                        <li
+                                class="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                            <span style="font-weight: bold;">Min : </span>
+                            {{ min.url }}
+                            <span id="min" class="badge badge-primary badge-pill"
+                            >{{ min.agg }}</span
+                            >
+                        </li>
+                        <li
+                                class="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                            <span style="font-weight: bold;">Sum of all time </span>
+                            <span id="sum" class="badge badge-primary badge-pill"
+                            >{{ sum.agg }}</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br/>
+    <br/>
+    <section class="mx-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Daily chart</h5>
+                    <canvas id="areachart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

@@ -1,50 +1,58 @@
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color:#f8f9fa;
-}
-
-#footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  text-align: center;
-}
-
-.navbar-item{
-  color: black;
-  padding: 10px;
-  font-size: 16px;
-}
-.navbar-item:hover{
-  color: white;
-  padding: 10px;
-  font-size: 18px;
-}
-ol {
-  list-style: none;
-  counter-reset: my-awesome-counter;
-}
-ol li {
-  counter-increment: my-awesome-counter;
-  font-size: 18px;
-  padding: 5px;
-  margin-bottom: 20px;
-}
-ol li::before {
-  content: counter(my-awesome-counter) ". ";
-  color: rgb(61, 128, 253);
-  font-weight: bold;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
 }
 .clear-btn{
-  float: right;
-  margin-right: 3rem;
+    margin-left: 90%;
+}
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
 }
 
-.badge-pill{
-  padding: 23px 50px;
-  font-size: 40px;
+.navbar-item {
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.navbar-item:hover {
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+}
+
+ol li {
+  counter-increment: list;
+  list-style-type: none;
+  position: relative;
+}
+
+ol li:before {
+  color: #e75204;
+  content: counter(list) ".";
+  left:-32px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+
+.clear-btn {
+
+    float: right;
+    margin-right: 3rem;
+}
+
+.badge-pill {
+    padding: 23px 50px;
+    font-size: 40px;
+}
+.card-title{
+    color: #17a2b8;
 }

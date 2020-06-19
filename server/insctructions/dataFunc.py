@@ -3,7 +3,9 @@ from django.db.models.functions import ExtractWeekDay
 from django.db.models import Avg
 import datetime
 import json
-class DataInstruct():
+
+
+class DataInstruct:
 
     def get_minute(self, seconds):
         if seconds == 0:
@@ -22,7 +24,7 @@ class DataInstruct():
 
     def get_percentage(self, item, time_list):
         total = sum(time_list)
-        return int((item*100)/total)
+        return int((item * 100) / total)
 
     def url_strip(self, url):
         if "http://" in url or "https://" in url:
@@ -33,27 +35,39 @@ class DataInstruct():
         return url
 
     def convert_to_time(self, sec):
-        try:       
+        try:
             return str(datetime.timedelta(seconds=sec))
         except Exception as identifier:
             pass
 
-    def get_week_days_data(self):
-        data = Sites.objects.annotate(weekday=ExtractWeekDay('date')).values('weekday').annotate(avg=Avg('time')).values('weekday', 'avg')
+    def get_week_days_data(self, id):
+        data = Sites.objects.filter(user_id=id).annotate(weekday=ExtractWeekDay('date')).values(
+            'weekday').annotate(avg=Avg('time')).values('weekday', 'avg')
         data = json.dumps(list(data))
-        data  = json.loads(data)
+        data = json.loads(data)
         return data
 
     def CalculateTimeInstructions(self, mainUrl, userId, Time):
         userSites = Sites.objects.filter(user_id=userId).all()
         try:
             q = userSites.get(url__exact=mainUrl)
-            q.time = q.time + int(Time)
-            q.save()
+            now = datetime.datetime.now().strftime("%Y-%m-%d")
+
+            if now == str(q.date):
+                q.dailyTime = int(Time) + q.dailyTime
+                q.time = q.time + int(Time)
+                q.save()
+            else:
+                q.dailyTime = int(Time)
+                q.time = q.time + int(Time)
+                q.save()
+
         except Exception as err:
+            print(err)
             newsite = Sites(
                 url=mainUrl,
                 user_id=userId,
-                time=int(Time)
+                time=int(Time),
+                dailyTime=int(Time)
             )
             newsite.save()
