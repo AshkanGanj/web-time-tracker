@@ -2,7 +2,7 @@
 if (localStorage.getItem("token") === null) {
   login();
   $("a").click(function () {
-    chrome.tabs.create({ url: "http://localhost:8000/signUp/" });
+    chrome.tabs.create({ url: "http://ashkanganj.pythonanywhere.com/signUp/" });
   });
 } else {
   $(".login").hide();
@@ -12,7 +12,7 @@ if (localStorage.getItem("token") === null) {
     login();
   });
   $("#dashboard").click(function () {
-    chrome.tabs.create({ url: "http://localhost:8000/" });
+    chrome.tabs.create({ url: "http://ashkanganj.pythonanywhere.com/" });
   });
 }
 
@@ -33,7 +33,7 @@ function login() {
 function sendReq(email,pass) {
   $.ajax({
     type: "POST",
-    url: "http://localhost:8000/api/login/",
+    url: "http://ashkanganj.pythonanywhere.com/api/login/",
     data: {
       username: email,
       password: pass,

@@ -4,7 +4,7 @@
 */
 var mtimer, sec, start,active;
 var tabUrlsUpdate = {};
-const serverUrl = "http://localhost:8000/api/update/";
+const serverUrl = "http://ashkanganj.pythonanywhere.com/api/update/";
 
 function Timmer(start) {
   mtimer = setInterval(function () {
@@ -76,4 +76,12 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
     send(serverUrl, u, sec);
     newTimer();
   }
+});
+
+chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
+  var key = Object.values(tabUrlsUpdate);
+  var last = key[key.length];
+  clearInterval(mtimer);
+  send(serverUrl, last, sec);
+  delete tabUrlsUpdate[tabId];
 });
