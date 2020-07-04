@@ -21,4 +21,5 @@ then run :
  
  2.'python manage.py runserver'
  project will accessible at "localhost:8000"
+ 
 ////////////////////////////////////////////////
