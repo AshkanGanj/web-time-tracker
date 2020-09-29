@@ -5,7 +5,7 @@ this app use chrome extension to detect your activities and send to api and api 
 for run add exetension to chrome 
 
 for run server first
-/////////////////////////////////////////////////
+
 
 install python 3.7 or higher
 then run :
@@ -29,5 +29,3 @@ then run :
  
  project will accessible at "localhost:8000"
  
- 
-////////////////////////////////////////////////
