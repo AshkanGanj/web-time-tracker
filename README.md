@@ -6,6 +6,7 @@ for run add exetension to chrome
 
 for run server first
 /////////////////////////////////////////////////
+
 install python 3.7 or higher
 then run :
 
@@ -13,13 +14,20 @@ then run :
  
  2. 'pip install djangorestframework'
  
+ 
  after instaltion run bellow in server root directory(where manage.py file exist)
+ 
  
  1. 'python manage.py migrate'
  
+ 
  for runserver:
  
+ 
  2.'python manage.py runserver'
+ 
+ 
  project will accessible at "localhost:8000"
+ 
  
 ////////////////////////////////////////////////
