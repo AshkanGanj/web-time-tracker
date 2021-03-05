@@ -1,5 +1,5 @@
 # web-time-tracker
-this app use chrome extension to detect your activities and send to api and api process data
+this app uses chrome extension to detect your activities and send to api and api process data
 
 
 for run add exetension to chrome 
@@ -15,7 +15,7 @@ then run :
  2. 'pip install djangorestframework'
  
  
- after instaltion run bellow in server root directory(where manage.py file exist)
+ after instaltion run bellow command at root directory(where manage.py file exist)
  
  
  1. 'python manage.py migrate'
@@ -27,5 +27,5 @@ then run :
  2.'python manage.py runserver'
  
  
- project will accessible at "localhost:8000"
+ project will be accessible at "localhost:8000"
  
